@@ -97,7 +97,7 @@ function! s:Flist(win)
             exe winnumt . 'wincmd w'
         endif
     else
-		let win_width = 20
+		let win_width = 40
 		let win_dir = 'topleft vertical'
         let bufnum = bufnr(bname)
         if bufnum == -1
@@ -275,8 +275,8 @@ function! s:Flist_move(dir)
 		  call search(tagpat, 'w')
 
 		  " highlight
-		  let tagpat = substitute(tagpat,'\/','\\\/',"g")
-		  exe 'match FoldName /^[ \t]*' . tagpat . '/'
+		  "let tagpat = substitute(tagpat,'\/','\\\/',"g")
+		  "exe 'match FoldName /^[ \t]*' . tagpat . '/'
 
 		  "open fold, mov to window top
 		  exe "norm zvzt"
