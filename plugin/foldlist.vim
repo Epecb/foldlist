@@ -269,6 +269,8 @@ function! s:Flist_move(dir)
 		else 
 		  " find fold pattern
 		  let tagpat = substitute(curline,"^[ \t]*","","")
+          " escape * char to avoid E61: nested *
+		  let tagpat = substitute(tagpat,'*','\\*',"g")
 		  echo ':'.tagpat.':'
 		  call search(tagpat, 'w')
 
