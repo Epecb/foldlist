@@ -135,7 +135,7 @@ function! s:Flist(win)
 	let scanline  = 0
 	let prevline = -1
 	while scanline != prevline
-	    if (foldlevel(scanline)>0 && scanline != prevline)
+	    if (foldlevel(scanline)>0)
 	      let ln = getline(scanline)
 	      let ln = substitute(ln,"^[ \t]*","","")
 	      let ln = substitute(ln,"{{{.*","","")
@@ -147,10 +147,9 @@ function! s:Flist(win)
 	      let ln = substitute(ln,"^__T4","\t\t\t\t","")
 	      let ln = substitute(ln,"^__T5","\t\t\t\t\t","")
 	      let ln = substitute(ln,"^__T6","\t\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T6","\t\t\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T7","\t\t\t\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T8","\t\t\t\t\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T9","\t\t\t\t\t\t\t\t\t\t","")
+	      let ln = substitute(ln,"^__T7","\t\t\t\t\t\t\t","")
+	      let ln = substitute(ln,"^__T8","\t\t\t\t\t\t\t\t","")
+	      let ln = substitute(ln,"^__T9","\t\t\t\t\t\t\t\t\t","")
 	      exe winnumt . 'wincmd w'
 	      exe append(line('$'),ln)
 	      exe winnum . 'wincmd w'
