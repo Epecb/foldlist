@@ -97,7 +97,7 @@ function! s:Flist(win)
             exe winnumt . 'wincmd w'
         endif
     else
-		let win_width = 40
+		let win_width = 25
 		let win_dir = 'topleft vertical'
         let bufnum = bufnr(bname)
         if bufnum == -1
@@ -112,6 +112,9 @@ function! s:Flist(win)
 		" make scratch buffer
 		set buftype=nofile
 		set noswapfile
+
+        " fix windth
+        set wfw
 
         " Delete the contents of the buffer to the black-hole register
         let winnumt = bufwinnr(bname)
@@ -137,19 +140,19 @@ function! s:Flist(win)
 	while scanline != prevline
 	    if (foldlevel(scanline)>0)
 	      let ln = getline(scanline)
-	      let ln = substitute(ln,"^[ \t]*","","")
-	      let ln = substitute(ln,"{{{.*","","")
+	      let ln = substitute(ln,"^[ \t/*\"]*","","")
+          let ln = substitute(ln,"{{{.*","{","")
 	      let ln = substitute(ln,"[ \t]*$","","")
 	      let ln = "__T".foldlevel(scanline).ln
-	      let ln = substitute(ln,"^__T1","\t","")
-	      let ln = substitute(ln,"^__T2","\t\t","")
-	      let ln = substitute(ln,"^__T3","\t\t\t","")
-	      let ln = substitute(ln,"^__T4","\t\t\t\t","")
-	      let ln = substitute(ln,"^__T5","\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T6","\t\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T7","\t\t\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T8","\t\t\t\t\t\t\t\t","")
-	      let ln = substitute(ln,"^__T9","\t\t\t\t\t\t\t\t\t","")
+	      let ln = substitute(ln,"^__T1","","")
+	      let ln = substitute(ln,"^__T2","\t","")
+	      let ln = substitute(ln,"^__T3","\t\t","")
+	      let ln = substitute(ln,"^__T4","\t\t\t","")
+	      let ln = substitute(ln,"^__T5","\t\t\t\t","")
+	      let ln = substitute(ln,"^__T6","\t\t\t\t\t","")
+	      let ln = substitute(ln,"^__T7","\t\t\t\t\t\t","")
+	      let ln = substitute(ln,"^__T8","\t\t\t\t\t\t\t","")
+	      let ln = substitute(ln,"^__T9","\t\t\t\t\t\t\t\t","")
 	      exe winnumt . 'wincmd w'
 	      exe append(line('$'),ln)
 	      exe winnum . 'wincmd w'
@@ -268,14 +271,7 @@ function! s:Flist_move(dir)
 		else 
 		  " find fold pattern
 		  let tagpat = substitute(curline,"^[ \t]*","","")
-          " escape * char to avoid E61: nested *
-		  let tagpat = substitute(tagpat,'*','\\*',"g")
-		  echo ':'.tagpat.':'
 		  call search(tagpat, 'w')
-
-		  " highlight
-		  "let tagpat = substitute(tagpat,'\/','\\\/',"g")
-		  "exe 'match FoldName /^[ \t]*' . tagpat . '/'
 
 		  "open fold, mov to window top
 		  exe "norm zvzt"
